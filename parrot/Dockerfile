@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y parrot-tools-full
 RUN apt-get update && \
     apt-get install -y --no-install-recommends evince file-roller gnome-themes-standard gpicview gtk2-engines-pixbuf ttf-ubuntu-font-family xfce4 xfce4-whiskermenu-plugin xorg xserver-xorg xfce4-indicator-plugin xfce4-terminal numix-icon-theme numix-icon-theme-circle
 
-RUN apt-get install -y xrdp locales supervisor sudo ibus ibus-mozc dbus dbus-x11
+RUN apt-get install -y xrdp locales supervisor sudo ibus ibus-mozc dbus dbus-x11 git
 
 RUN locale-gen en_US && \
     apt-get install -y git tigervnc-standalone-server && \
@@ -40,10 +40,12 @@ RUN ln -s /root/noVNC/vnc_lite.html /root/noVNC/index.html && \
 
 
 RUN echo "xfce4-session" > /etc/skel/.xsession
-    
-RUN apt-get install -y xfce4-taskmanager mousepad wget
 
-RUN wget https://oswallpapers.com/wp-content/uploads/2020/04/default-1.jpg -O /usr/share/backgrounds/xfce/default.jpg
+RUN git clone https://github.com/ParrotPwnBox/PwnBox.git
+
+RUN sudo sh ./PwnBox/install.sh
+
+RUN apt-get install -y xfce4-taskmanager mousepad wget
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
